@@ -7,7 +7,7 @@ print(result)
 
 
 # 2
-import math
+import math     
 
 def counter(s):
     upper = sum(1 for c in s if c.isupper())
@@ -24,7 +24,7 @@ palindrome = "madam"
 
 is_palindrome = palindrome == palindrome[::-1]
 print("Is palindrome:", is_palindrome)
-'''
+'''     
 "madam" → True
 "racecar" → True
 "hello" → False
