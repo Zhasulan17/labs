@@ -1,0 +1,54 @@
+import pygame
+import time
+
+
+pygame.init()
+
+
+width, height = 400, 400
+CENTER = (width // 2, height // 2)
+clock = pygame.time.Clock()
+run = True
+
+
+background = pygame.image.load("clock.png")  
+minute_hand = pygame.image.load("rightarm.png")  
+second_hand = pygame.image.load("leftarm.png")   
+
+
+hand_scale = 0.4
+minute_hand = pygame.transform.scale(minute_hand, (int(minute_hand.get_width() * hand_scale), int(minute_hand.get_height() * hand_scale)))
+second_hand = pygame.transform.scale(second_hand, (int(second_hand.get_width() * hand_scale), int(second_hand.get_height() * hand_scale)))
+background = pygame.transform.scale(background, (width, height))
+
+screen = pygame.display.set_mode((width, height))
+
+while run:
+    screen.fill((255, 255, 255))
+    screen.blit(background, (0, 0))
+    
+    current_time = time.localtime()
+    minutes = current_time.tm_min
+    seconds = current_time.tm_sec
+    
+    second_angle = -seconds * 6  
+    minute_angle = -(minutes * 6 + seconds * 0.1) 
+    
+    rotated_second = pygame.transform.rotate(second_hand, second_angle)
+    rotated_minute = pygame.transform.rotate(minute_hand, minute_angle)
+    
+    second_rect = rotated_second.get_rect(center=CENTER)
+    minute_rect = rotated_minute.get_rect(center=CENTER)
+    
+    screen.blit(rotated_minute, minute_rect.topleft)
+    screen.blit(rotated_second, second_rect.topleft)
+    
+    pygame.display.flip()
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    clock.tick(60)  
+
+pygame.quit()
